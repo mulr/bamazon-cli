@@ -1,0 +1,27 @@
+{
+  "name": "bamazon-cli",
+  "version": "1.0.0",
+  "description": "bamazon",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "inquirer": "^3.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drmulr/bamazon-cli.git"
+  },
+  "keywords": [
+    "node",
+    "bamazon"
+  ],
+  "author": "Daniel Muller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drmulr/bamazon-cli/issues"
+  },
+  "homepage": "https://github.com/drmulr/bamazon-cli#readme"
+}
