@@ -135,11 +135,10 @@ function buyProducts() {
         var amt = answer.quantBuy;
         var currInv = results[answer.idBuy - 1].stock_quantity;
         var newInventoryQuantity = currInv - amt;
-        // UPDATE products 
-        // SET stock_quantity = stock_quantity - 5
-        // WHERE item_id = 1;
         console.log("Updating inventory...\n");
-        var query = connection.query("UPDATE products SET ? WHERE ?",
+
+        if ( amt < currInv ){
+          var query = connection.query("UPDATE products SET ? WHERE ?",
           [
             {
               stock_quantity: newInventoryQuantity
@@ -152,9 +151,12 @@ function buyProducts() {
             // console.log(res);
             // startShop();
             // Call deleteProduct AFTER the UPDATE completes
-            // deleteProduct();
           }
-        );
+        ); 
+        } else {
+          console.log("Insufficient inventory for your request. Please try again...\n ");
+        }
+
         // logs the actual query being run
         // console.log(query.sql);
         //-------------------------------------------------------------------------------------------
