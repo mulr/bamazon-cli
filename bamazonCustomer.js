@@ -48,7 +48,7 @@ var connection = mysql.createConnection({
         choices: [
           "View current inventory",
           "Make a purchase",
-          "TBD"
+          "Get up on outta here!"
         ]
       })
       .then(function(answer) {
@@ -61,8 +61,8 @@ var connection = mysql.createConnection({
             buyProducts();
             break;
   
-          case "TBD":
-            rangeSearch();
+          case "Get up on outta here!":
+          connection.end();
             break;
         }
       });
@@ -101,63 +101,65 @@ function showProducts() {
 function buyProducts() {
   //Here we'll purchase some quantity of some specific product:
   console.log("What will you purchase next? \n")
-  inquirer
-    .prompt([
-      {
-        name: "idBuy",
-        type: "input",
-        message: "Product would you like to purchase (Item ID): ",
-        validate: function (value) {
-          if (isNaN(value) === false) {
-            return true;
+  connection.query("SELECT * FROM products", function (err, results) {
+
+    inquirer
+      .prompt([
+        {
+          name: "idBuy",
+          type: "input",
+          message: "Product would you like to purchase (Item ID): ",
+          validate: function (value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            return false;
           }
-          return false;
-        }
-      },
-      {
-        name: "quantBuy",
-        type: "input",
-        message: "Quantity desired: ",
-        validate: function (value) {
-          if (isNaN(value) === false) {
-            return true;
+        },
+        {
+          name: "quantBuy",
+          type: "input",
+          message: "Quantity desired: ",
+          validate: function (value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            return false;
           }
-          return false;
         }
-      }
-    ])
-    .then(function (answer) {
-      //-------------------------------------------------------------------------------------------
-      //HERE NEED TO SUBTRACT GOODS PURCHASED, OR REJECT OFFER
-
-      //BAL_QTY = BAL_QTY - (SELECT   SUM(QTY)
-
-
-      console.log("Updating inventory...\n");
-      var query = connection.query("UPDATE products SET ? WHERE ?",
-        [
-          {
-            stock_quantity: answers.quantBuy
-          },
-          {
-            item_id: answers.idBuy
+      ])
+      .then(function (answer) {
+        //-------------------------------------------------------------------------------------------
+        //HERE NEED TO SUBTRACT GOODS PURCHASED, OR REJECT OFFER
+        var item = answer.idBuy;
+        var amt = answer.quantBuy;
+        var currInv = results[answer.idBuy - 1].stock_quantity;
+        var newInventoryQuantity = currInv - amt;
+        // UPDATE products 
+        // SET stock_quantity = stock_quantity - 5
+        // WHERE item_id = 1;
+        console.log("Updating inventory...\n");
+        var query = connection.query("UPDATE products SET ? WHERE ?",
+          [
+            {
+              stock_quantity: newInventoryQuantity
+            },
+            {
+              item_id: item
+            }
+          ],
+          function (err, res) {
+            // console.log(res);
+            // startShop();
+            // Call deleteProduct AFTER the UPDATE completes
+            // deleteProduct();
           }
-        ],
-        function(err, res) {
-          console.log(res);
-          // Call deleteProduct AFTER the UPDATE completes
-          // deleteProduct();
-        }
-      );
-    
-      // logs the actual query being run
-      console.log(query.sql);
-
-
-
-
-      //-------------------------------------------------------------------------------------------
-
+        );
+        // logs the actual query being run
+        // console.log(query.sql);
+        //-------------------------------------------------------------------------------------------
         startShop();
       });
+
+  });
 };
