@@ -33,13 +33,14 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
+  // console.log("connected as id " + connection.threadId + "\n");
   // createProduct();
   startShop();
 });
 
 
 function startShop() {
+  console.log("\nWelcome to Bamazon!\n")
   inquirer
     .prompt({
       name: "action",
