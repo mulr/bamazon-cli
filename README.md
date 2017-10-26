@@ -5,7 +5,7 @@
 I've created an Amazon-like storefront utilizing MySQL and Node.js run from the command line. 
 
 ### Customer Portal
-Visit the store as a **customer** with command: node bamazonCustomer.js, and you'll see prompts such as this:
+Visit the store as a **customer** with command: *node bamazonCustomer.js*, and you'll see prompts such as this:
 
 ![Image of Welcome to Bamazon!](https://github.com/drmulr/bamazon-cli/blob/master/assets/images/welcomeShot.png)
 
@@ -23,7 +23,7 @@ Choose to view last chance, low inventory items, and you'll see just that:
 
 
 ### Manager Portal
-Visiting the store as a **manager** grants you additional control. Along with basic access to viewing inventory and low inventory items, the manager has the ability to add to inventory:
+Visiting the store as a **manager** grants you additional control. Along with basic access to viewing inventory and low inventory items, the manager has the ability to add to inventory. Access the manager portal with command: *node bamazonManager.js*:
 
 ![Image of Low Inventory](https://github.com/drmulr/bamazon-cli/blob/master/assets/images/mgrAddInvShot.png)
 
